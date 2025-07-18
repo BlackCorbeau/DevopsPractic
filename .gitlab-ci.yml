@@ -7,3 +7,9 @@ build:
   image: golang:1.23.3
   script:
     - go build
+
+test:
+  stage: test
+  image: golang:1.23.3
+  script:
+    - go test ./...
