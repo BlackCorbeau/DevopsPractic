@@ -5,4 +5,5 @@ stages:
 build:
   stage: build
   image: golang:1.23.3
-  script: -go build
+  script:
+    - go build
