@@ -14,7 +14,7 @@ build-docker:
   services:
     - docker:dind
   script:
-    - docker build -t pig:0.0.1
+    - docker build . -t pig:0.0.1
   before_script:
     - export
 
