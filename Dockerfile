@@ -1,4 +1,4 @@
-FROM golang:1.23.3
+FROM golang:1.23.3 as builder
 
 RUN mkdir /app
 WORKDIR /app
@@ -14,3 +14,9 @@ RUN go build
 EXPOSE 8000
 
 CMD /app/pig
+
+FROM alpine:latest
+
+WORKDIR /root
+COPY --from=builder /app .
+CMD ./pig
