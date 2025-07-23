@@ -1,12 +1,16 @@
 stages:
   - build
   - test
+  - deploy
 
 build:
   stage: build
   image: golang:1.23.3
   script:
     - go build
+  artifacts:
+    paths:
+      - ./pig
 
 build-docker:
   stage: build
@@ -25,3 +29,21 @@ test:
   image: golang:1.23.3
   script:
     - go test ./...
+
+deploy:
+  stage: deploy
+  image: dabian:stable
+  dependencies:
+    - build
+  before_script:
+    - apt update
+    - apt install python3 python3-pip ssh
+    - pip install ansible
+    - cd ~
+    - mkdir .ssh
+    - echo $id_rsa > .ssh/id_rsa
+    - chmod 700 .ssh
+    - chmod 600 .ssh/id_rsa
+    - cd -
+  script:
+    - ansible-playbook -i inventory.ini pig_playbook.yaml
