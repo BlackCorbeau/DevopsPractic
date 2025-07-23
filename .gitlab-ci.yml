@@ -32,7 +32,7 @@ test:
 
 deploy:
   stage: deploy
-  image: dabian:stable
+  image: debian:stable
   dependencies:
     - build
   before_script:
